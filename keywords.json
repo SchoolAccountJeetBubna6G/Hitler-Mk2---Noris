@@ -1,0 +1,12 @@
+{
+    "keywords":[
+        {
+            "weather":"weather_fetcher.py",
+            "volume":"volume_shifter.py",
+            "timer":"timer.py",
+            "clock":"timer.py",
+            "music":"music_player.py",
+            "google":"google_search.py"
+        }
+    ]
+}
