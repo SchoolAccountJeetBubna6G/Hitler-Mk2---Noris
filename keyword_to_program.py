@@ -23,7 +23,7 @@ def keyword_to_program_linker(keyword_value:str, text:str) -> None:
     match keyword_value:
         
         case 'weather_fetcher.py':
-            weather_fetcher.fetch_weather()
+            weather_fetcher.fetch_weather(text)
 
 
         case 'volume_shifter.py':
