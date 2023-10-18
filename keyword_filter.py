@@ -55,3 +55,16 @@ def find_seconds_in_text(text):
     elif 'hour' in units:
         time = conversion.conversion_hour_to_second(value[0])
     return time
+
+def find_word_after(text:str, word:str) -> dict:
+    ending_index = 0    #Boilerplate
+    starting_index = 0  #Boilerplate
+    return {'starts-at': starting_index, 'ends-at': ending_index}
+
+def is_word_after(word:str, text:str) -> bool:
+    pass
+
+def find_month_in_text(text:str) -> dict:
+    is_month_present = False #Boilerplate
+    month_name = ''          #Boilerplate
+    return {'is-month-present':is_month_present, 'month-name':month_name}

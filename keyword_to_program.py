@@ -6,7 +6,7 @@ import weather_fetcher
 import keyword_filter
 import threading
 import noris_speak as ns
-
+"""
 def find_time_from_text(text):
     import conversion
     value = keyword_filter.find_numericals_in_text(text)
@@ -18,7 +18,7 @@ def find_time_from_text(text):
     elif 'hour' in units:
         time = conversion.conversion_hour_to_second(value[0])
     return time
-
+"""
 def keyword_to_program_linker(keyword_value:str, text:str) -> None:
     match keyword_value:
         
