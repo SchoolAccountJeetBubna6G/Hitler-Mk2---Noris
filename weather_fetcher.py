@@ -32,4 +32,4 @@ def fetch_weather(text:str) -> None:
         ns.Speak('Sorry, an error occurred')
         print(response)
 
-fetch_weather('whats the weather')
+#fetch_weather('whats the weather')

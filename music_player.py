@@ -29,7 +29,9 @@ PLAYLIST_URL = 'Rap Songs New'
 
 PLAY_WORDS_NOT_REQ = ['play','blast'] #Words that if present, good, but if not, then its ok
 REQUIRED_WORDS = ['music', 'song']
+IS_PLAYING = False
 
+"""
 def get_songs_in_spotify() -> list:
     
     def get_current_url(url:str) -> str:
@@ -49,12 +51,12 @@ def get_songs_in_spotify() -> list:
         #webbrowser.open("https://accounts.spotify.com/authorize?" + urlencode(auth_headers))
         code_url = get_current_url("https://accounts.spotify.com/authorize?" + urlencode(auth_headers))
         #TO FINSIH NOT COMPLETE ------------------------  TO FINISH NOT COMPLETE        
-
     def get_access_code(code:str) -> str:
         pass
 
     code = get_code_spotify()
     access_code = get_access_code(code)
+"""
 
 
 def get_songs_downloaded() -> list:
@@ -73,30 +75,43 @@ def play(playlist_url:str, is_playlist:bool):
         music_files = [f for f in listdir(playlist_url) if isfile(join(playlist_url, f))] #gets the files from the url
         return music_files
     
-    def get_song_lenght():
-        pass
+    def get_song_lenght(song_file:str) -> int:
+        print(song_file) #Rap Songs New\Venom - Music From The Motion Picture.mp3
+        from mutagen.mp3 import MP3
+        audio = MP3(song_file)
+        return audio.info.length
 
-    def play_current_song(filename:str):
-        webbrowser.open(filename)
+    def play_current_song(filename:str, volume:float):
+        from pygame import mixer
+        mixer.init() 
+  
+        # Loading the song 
+        mixer.music.load(filename=filename)
+        
+        # Setting the volume 
+        mixer.music.set_volume(volume)
+        # Start playing the song 
+        mixer.music.play() 
+
 
     if is_playlist:
-        import webbrowser
         import time
         songs_in_playlist = get_songs_in_playlist(playlist_url)
         for song in songs_in_playlist:
             print(song) #PRINT SONGS
             filename = 'Rap Songs New/'+song
-            play_current_song(filename=filename)
-            lenght_song = get_song_lenght()
+            play_current_song(filename=filename, volume=0.7)
+            lenght_song = get_song_lenght(filename)
             time.sleep(lenght_song)
         
-
+"""
 def check_if_downloaded():
     songs_spotify = get_songs_in_spotify()
     songs_downloaded = get_songs_downloaded()
     for song in songs_spotify:
         if song not in songs_downloaded:
             download_song(song)
+"""
 
 def play_music(text:str):
     #PRE SETUP
@@ -104,6 +119,10 @@ def play_music(text:str):
     
     for word in REQUIRED_WORDS:
         if word in text:
+            Speak('Sure! Playing music!')
             play(PLAYLIST_URL, True)
     
-    Speak('Playing.. Music!')
+    IS_PLAYING = True
+    
+
+#play_music('play music')

@@ -40,7 +40,9 @@ def keyword_to_program_linker(keyword_value:str, text:str) -> None:
 
 
         case 'music_player.py':
-            music_player.play_music(text)
+            thread_music = threading.Thread(target=music_player.play_music, args=(text,))
+            #music_player.play_music(text)
+            thread_music.start()
 
 
         case 'google_search.py':
