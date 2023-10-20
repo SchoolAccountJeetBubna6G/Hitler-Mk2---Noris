@@ -1,8 +1,8 @@
+text = input('YOU:: ')
 
-def timer(time_):
-    import time
-    time_val = time_
-    while time_val > 0:
-        time_val -= 1
-        print('Time remaining:',time_val)
-        time.sleep(1)
+control_words = {'pause':[' pause','stop'], 'resume':['start',' unpause']}
+print(control_words['pause'])
+for control_word in control_words:
+    for word in control_words[control_word]:
+        if word in text:
+            print(control_word)

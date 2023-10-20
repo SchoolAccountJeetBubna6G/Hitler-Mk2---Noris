@@ -6,20 +6,10 @@ import weather_fetcher
 import keyword_filter
 import threading
 import noris_speak as ns
-"""
-def find_time_from_text(text):
-    import conversion
-    value = keyword_filter.find_numericals_in_text(text)
-    units = keyword_filter.find_units_in_text(text)
-    time = value[0]
-    print(f'Thread is running, and has executed. Value->{value} Unit->{units}')
-    if 'minute' in units:
-        time = conversion.conversion_minute_to_second(value[0])
-    elif 'hour' in units:
-        time = conversion.conversion_hour_to_second(value[0])
-    return time
-"""
+
+
 def keyword_to_program_linker(keyword_value:str, text:str) -> None:
+
     match keyword_value:
         
         case 'weather_fetcher.py':
@@ -35,29 +25,30 @@ def keyword_to_program_linker(keyword_value:str, text:str) -> None:
             #Start the thread
             print('timer detected!')
             time = keyword_filter.find_seconds_in_text(text)
-            thread = threading.Thread(target=clock.create_timer, args=(time,)) #Setting to 5 for testing
+            thread = threading.Thread(target=clock.create_timer, args=[time]) #Setting to 5 for testing
             thread.start()
 
-
         case 'music_player.py':
-            thread_music = threading.Thread(target=music_player.play_music, args=(text,))
-            #music_player.play_music(text)
-            thread_music.start()
+            
+            if music_player.IS_PLAYING == False:
+                #music_player.play_music(text)
+                print(music_player.IS_PLAYING)
+                thread_music = threading.Thread(target=music_player.play_music, args=(text,))
+                thread_music.start()
 
 
         case 'google_search.py':
             pass
 
-#keyword_to_program_linker('timer.py', 'set a timer for 5 seconds')
 
-"""
-        case 'timer.py':
-            ####### TO FIX -------------------------
-            time = find_time_from_text(text)
+    control_words = {'pause':[' pause','stop'], 'resume':['start',' unpause', 'resume']}
+    if music_player.IS_PLAYING:
+        for control_word in control_words:
+            for word in control_words[control_word]:
+                if word in text:
+                    if control_word == 'pause':
+                        music_player.pause_music()
+                    elif control_word == 'resume':
+                        music_player.unpause_muisc()
 
-            timer_thread = threading.Thread(target=clock.timer, args=(time,))
-            timer_thread.start()
-
-
-            print('thread started')
-"""
+#keyword_to_program_linker('music_player.py', 'pause music')

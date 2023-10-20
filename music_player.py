@@ -96,11 +96,13 @@ def play(playlist_url:str, is_playlist:bool):
 
     if is_playlist:
         import time
+        import random
         songs_in_playlist = get_songs_in_playlist(playlist_url)
+        random.shuffle(songs_in_playlist)
         for song in songs_in_playlist:
             print(song) #PRINT SONGS
             filename = 'Rap Songs New/'+song
-            play_current_song(filename=filename, volume=0.7)
+            play_current_song(filename=filename, volume=0.3)
             lenght_song = get_song_lenght(filename)
             time.sleep(lenght_song)
         
@@ -120,9 +122,22 @@ def play_music(text:str):
     for word in REQUIRED_WORDS:
         if word in text:
             Speak('Sure! Playing music!')
+            print('Playing, music!')
+            #print(IS_PLAYING)
+            global IS_PLAYING
+            IS_PLAYING = True
             play(PLAYLIST_URL, True)
+    IS_PLAYING = False
+    return 
     
-    IS_PLAYING = True
-    
+def pause_music():
+    from pygame import mixer
+    print('pausing')
+    mixer.music.pause()
+
+def unpause_muisc():
+    from pygame import mixer
+    print('unpausing')
+    mixer.music.unpause()
 
 #play_music('play music')

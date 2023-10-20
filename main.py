@@ -17,8 +17,8 @@ __init__() #Initializes keyword filter
 
 def main():
     #text = speech.generate_text_vosk()
-    text = speech.generate_text_google()
-    #text = TEST_VALUE
+    #text = speech.generate_text_google()
+    text = input('YOU:: ')
     if type(text) is str:
         text = text.lower()
         print(text, assistant_name_in_text(ASSISTANT_NAME, text))#Debug

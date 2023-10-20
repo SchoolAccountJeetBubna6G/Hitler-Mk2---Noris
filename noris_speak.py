@@ -1,7 +1,6 @@
 import pyttsx3
 
-engine = pyttsx3.init()
-
 def Speak(text):
+    engine = pyttsx3.init()
     engine.say(text=text)
     engine.runAndWait()
