@@ -1,5 +1,6 @@
 from noris_speak import Speak
-
+from pygame import mixer
+import random
 #STEPS TO GET MUSIC
 """
 PRE-SETUP
@@ -30,6 +31,7 @@ PLAYLIST_URL = 'Rap Songs New'
 PLAY_WORDS_NOT_REQ = ['play','blast'] #Words that if present, good, but if not, then its ok
 REQUIRED_WORDS = ['music', 'song']
 IS_PLAYING = False
+IS_PAUSED = False
 
 """
 def get_songs_in_spotify() -> list:
@@ -68,43 +70,14 @@ def download_song(name:str):
 def get_current_playing_song() -> str:
     pass
 
-def play(playlist_url:str, is_playlist:bool):
-    def get_songs_in_playlist(playlist_url:str) -> list:
+
+def get_songs_in_playlist(playlist_url:str) -> list:
         from os import listdir
         from os.path import isfile, join
         music_files = [f for f in listdir(playlist_url) if isfile(join(playlist_url, f))] #gets the files from the url
         return music_files
-    
-    def get_song_lenght(song_file:str) -> int:
-        print(song_file) #Rap Songs New\Venom - Music From The Motion Picture.mp3
-        from mutagen.mp3 import MP3
-        audio = MP3(song_file)
-        return audio.info.length
-
-    def play_current_song(filename:str, volume:float):
-        from pygame import mixer
-        mixer.init() 
-  
-        # Loading the song 
-        mixer.music.load(filename=filename)
-        
-        # Setting the volume 
-        mixer.music.set_volume(volume)
-        # Start playing the song 
-        mixer.music.play() 
 
 
-    if is_playlist:
-        import time
-        import random
-        songs_in_playlist = get_songs_in_playlist(playlist_url)
-        random.shuffle(songs_in_playlist)
-        for song in songs_in_playlist:
-            print(song) #PRINT SONGS
-            filename = 'Rap Songs New/'+song
-            play_current_song(filename=filename, volume=0.3)
-            lenght_song = get_song_lenght(filename)
-            time.sleep(lenght_song)
         
 """
 def check_if_downloaded():
@@ -114,6 +87,23 @@ def check_if_downloaded():
         if song not in songs_downloaded:
             download_song(song)
 """
+
+def play(music_files:list, APPROX_TIME_TO_RUN_LOOP:float):
+        import time
+        random.shuffle(music_files)
+        for music_file in music_files:
+            mixer.init()
+            mixer.music.load('Rap Songs New/'+music_file)
+            mixer.music.set_volume(0.7)
+            mixer.music.play()
+            _ = True
+            while _:
+                status = mixer.music.get_busy()
+                if status == True:
+                    time.sleep(APPROX_TIME_TO_RUN_LOOP)
+                elif status == False and IS_PAUSED == False:
+                    print('FALSEEEEE')
+                    _ = False
 
 def play_music(text:str):
     #PRE SETUP
@@ -126,18 +116,20 @@ def play_music(text:str):
             #print(IS_PLAYING)
             global IS_PLAYING
             IS_PLAYING = True
-            play(PLAYLIST_URL, True)
+            play(get_songs_in_playlist(PLAYLIST_URL), 0.001)
     IS_PLAYING = False
     return 
     
 def pause_music():
-    from pygame import mixer
-    print('pausing')
+    Speak('pausing')
     mixer.music.pause()
+    global IS_PAUSED
+    IS_PAUSED = True
 
 def unpause_muisc():
-    from pygame import mixer
-    print('unpausing')
+    Speak('unpausing')
     mixer.music.unpause()
+    global IS_PAUSED
+    IS_PAUSED = True
 
 #play_music('play music')

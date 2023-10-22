@@ -36,4 +36,11 @@ def theThreadingTimerClockBug():
         control_variable += 1
         time.sleep(1)
     
-theThreadingTimerClockBug()
+def theTestMusicPlayerNONETYPEOBJECTNOTITERABLEBug():
+    from os import listdir
+    from os.path import isfile, join
+    PLAYLIST_URL = r'C:\Users\Jeet\Desktop\Projects\PythonProjects\SpeechRecognition\Hitler Mk2 - Noris\Rap Songs New'
+    music_files = [f for f in listdir(PLAYLIST_URL) if isfile(join(PLAYLIST_URL, f))]
+    print(music_files)
+
+theTestMusicPlayerNONETYPEOBJECTNOTITERABLEBug()
