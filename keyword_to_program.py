@@ -29,7 +29,7 @@ def keyword_to_program_linker(keyword_value:str, text:str) -> None:
             thread.start()
 
         case 'music_player.py':
-            
+            print('THE STATUS OF THE MIXER IS ', music_player.IS_PLAYING)
             if music_player.IS_PLAYING == False:
                 #music_player.play_music(text)
                 print(music_player.IS_PLAYING)
@@ -41,7 +41,7 @@ def keyword_to_program_linker(keyword_value:str, text:str) -> None:
             pass
 
 
-    control_words = {'pause':[' pause','stop'], 'resume':['start',' unpause', 'resume']}
+    control_words = {'pause':['pause','stop'], 'resume':['start',' unpause', 'resume'], 'stop':['stop','end']}
     if music_player.IS_PLAYING:
         for control_word in control_words:
             for word in control_words[control_word]:
@@ -50,5 +50,7 @@ def keyword_to_program_linker(keyword_value:str, text:str) -> None:
                         music_player.pause_music()
                     elif control_word == 'resume':
                         music_player.unpause_muisc()
+                    elif control_word == 'stop':
+                        music_player.stop_music()
 
 #keyword_to_program_linker('music_player.py', 'pause music')

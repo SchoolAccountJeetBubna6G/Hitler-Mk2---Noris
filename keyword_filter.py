@@ -12,12 +12,13 @@ def import_keywords_json():
 
 
 def keyword_in_text(text:str) -> dict:
+    import_keywords_json()
     if text != None:
-        keyword_counter = 0
+        #keyword_counter = 0
         for keyword in keywords['keywords'][0]:
             if keyword in text:
                 return {'keyword_present':True, 'keyword_value':keywords['keywords'][0][keyword]}
-            keyword_counter += 1
+            #keyword_counter += 1
         return {'keyword_present':False}
 
 def find_numericals_in_text(text:str) -> list:
